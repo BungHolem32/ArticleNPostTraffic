@@ -1,0 +1,10 @@
+.container {
+    margin-top: 20px;
+}
+
+/*change the pagination to full width*/
+.pagination {
+    text-align: center;
+    display: table;
+    margin: 0 auto;
+}
