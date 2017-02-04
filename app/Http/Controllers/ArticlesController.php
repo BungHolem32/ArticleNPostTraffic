@@ -10,20 +10,34 @@ namespace App\Http\Controllers;
 
 use App\Http\Entities\Article;
 use App\Repository\ArticlesRepository as Repository;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 
 
+/**
+ * Class ArticlesController
+ * @package App\Http\Controllers
+ */
 class ArticlesController extends Controller
 {
 
+    /**
+     * @var Repository
+     */
     private $repo;
 
+
+    /**
+     * ArticlesController constructor.
+     * @param Repository $repo
+     */
     public function __construct(Repository $repo)
     {
         $this->repo = $repo;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $articles = $this->repo->getAllArticles();
@@ -31,6 +45,10 @@ class ArticlesController extends Controller
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create(Request $request)
     {
         $article = $request->all();
@@ -46,18 +64,28 @@ class ArticlesController extends Controller
         return view('pages.articles-create')->with(["data" => ($this->repo->getAllArticles())]);
     }
 
-    public function createFromAuthor(Request $request)
-    {
 
+    public function createFromAuthor()
+    {
+        /**todo  add new article from specific author
+         */
     }
 
 
+    /**
+     * @param null $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editView($id = null)
     {
         return view('pages.articles-edit')->with(['article' => $this->repo->articleWithId($id)]);
     }
 
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function editArticle(Request $request)
     {
         $articles = $request->request->all();
@@ -76,11 +104,6 @@ class ArticlesController extends Controller
         } else {
             return redirect()->back()->withErrors(['err' => $status]);
         }
-    }
-
-    public function retrieve()
-    {
-        return view('admin.index')->with(['data' => $this->repo->retrieve()]);
     }
 
 
