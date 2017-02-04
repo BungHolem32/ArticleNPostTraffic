@@ -1,3 +1,12 @@
+**You Must  First Create Database of your choice in your database and then update
+the env file then and run the:**
+ 
+* php artisan doctrine:schema:create
+ 
+
+
+
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
