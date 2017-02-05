@@ -12,6 +12,7 @@
         <h1>Article Creation</h1>
     </div>
 
+    {{--print success message--}}
     @if(session('feedback'))
         <div class="alert alert-success">
             {{session('feedback')}}
@@ -72,7 +73,18 @@
         </div>
     </div>
 
-    {{$data->render()}}
-
+    {{--Pagination was build manualy (without forloop)--}}
+    <ul class="pagination">
+        <li><a href="{{route('articles.index')}}?page=1&s=1">1</a></li>
+        <li><a href="{{route('articles.index')}}?page=2&s=4">2</a></li>
+        <li><a href="{{route('articles.index')}}?page=3&s=7">3</a></li>
+        <li><a href="{{route('articles.index')}}?page=4&s=10">4</a></li>
+        <li><a href="{{route('articles.index')}}?page=5&s=13">5</a></li>
+        <li><a href="{{route('articles.index')}}?page=5&s=16">6</a></li>
+        <li><a href="{{route('articles.index')}}?page=5&s=19">7</a></li>
+        <li><a href="{{route('articles.index')}}?page=5&s=22">8</a></li>
+        <li><a href="{{route('articles.index')}}?page=5&s=25">9</a></li>
+        <li><a href="{{route('articles.index')}}?page=5&s=28">10</a></li>
+    </ul>
 
 @endsection

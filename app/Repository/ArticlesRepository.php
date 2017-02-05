@@ -10,10 +10,9 @@ namespace App\Repository;
 
 use App\Http\Entities\Article;
 use App\Http\Entities\Author;
-use App\Repository\AuthorRepository as AR;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\ORM\EntityManager as EntityManager;
-use LaravelDoctrine\ORM\Pagination\Paginatable;
+
+//use LaravelDoctrine\ORM\Pagination\Paginatable;
 
 
 /**
@@ -22,7 +21,7 @@ use LaravelDoctrine\ORM\Pagination\Paginatable;
  */
 class ArticlesRepository
 {
-    use Paginatable;
+//    use Paginatable;
 
 
     const APP_HTTP_ENTITY_ARTICLE = 'App\Http\Entities\Article';
@@ -30,10 +29,7 @@ class ArticlesRepository
      * @var EntityManager
      */
     private $em;
-    /**
-     * @var Paginator
-     */
-    private $paginator;
+
 
     /**
      * ArticlesRepository constructor.
@@ -42,11 +38,11 @@ class ArticlesRepository
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
-
     }
 
-
     /**
+     * Create new article
+     *
      * @param Article $article
      */
     public function create(Article $article)
@@ -57,6 +53,8 @@ class ArticlesRepository
 
 
     /**
+     * Update the article values
+     *
      * @param Article $article
      * @param $data
      * @return string
@@ -77,6 +75,8 @@ class ArticlesRepository
     }
 
     /**
+     * Delete article from the database
+     *
      * @param Article $article
      */
     public function delete(Article $article)
@@ -86,6 +86,8 @@ class ArticlesRepository
     }
 
     /**
+     * Search article with specif id and return it to the edit page
+     *
      * @param $id
      * @return null|Article|object
      */
@@ -96,15 +98,33 @@ class ArticlesRepository
         ]);
     }
 
-    public function getAllArticles()
+    /**
+     * Get all Articles from the database (it get all of them from repository to increase performance
+     *
+     * @param $setting
+     * @return array
+     */
+    public function getAllArticles($setting = [])
     {
+
+        $start = !empty($setting['s']) ? $setting['s'] : 1;
+
         $query = $this->em
             ->getRepository(self::APP_HTTP_ENTITY_ARTICLE)
             ->createQueryBuilder('articles')
             ->orderBy('articles.id', 'ASC')
+            ->setFirstResult($start)
+            ->setMaxResults(3)
             ->getQuery();
 
-        return $this->paginate($query, 3, 'Articles');
+        return $query->getResult();
+
+
+        /**todo
+         * need to fix the pagination stuff
+         * 1.this is the pagination from doctrine (it only limit the results)
+         */
+//      return $this->paginate($query,'page');
     }
 
     /**
@@ -121,6 +141,9 @@ class ArticlesRepository
     }
 
     /**
+     *
+     * Prepare the data to persist after create new Article
+     *
      * @param $data
      * @return Article
      * @internal param AuthorRepository $authorRepository
@@ -131,6 +154,8 @@ class ArticlesRepository
         $article->setTitle($data['title']);
         $article->setBody($data['body']);
         $article->setReview($data['review']);
+
+        /*need to use this two lines in the author repository */
         $author = new Author();
         $author->setName($data['name']);
         $article->setAuthor($author);

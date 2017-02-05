@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityManager as Em;
 
 class AuthorRepository
 {
-    const APP_HTTP_ENTITY_ARTICLE = 'App\Http\Entities\Author';
+    const APP_HTTP_ENTITY_Author ='App\Http\Entities\Author' ;
     private $em;
 
     /**
@@ -74,16 +74,6 @@ class AuthorRepository
         ]);
     }
 
-    public function getAllAuthors()
-    {
-        $query = $this->em
-            ->getRepository(self::APP_HTTP_ENTITY_Author)
-            ->createQueryBuilder('a')
-            ->orderBy('a.id', 'ASC')
-            ->getQuery();
-
-        return $this->paginate($query, 3, 'Author');
-    }
 
     /**
      * Creates a new QueryBuilder instance that is prepopulated for this entity name.

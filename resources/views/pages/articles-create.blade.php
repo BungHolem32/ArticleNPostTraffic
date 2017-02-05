@@ -6,6 +6,21 @@
     <div class="page-header">
         <h1>Article Creation</h1>
     </div>
+    {{--print the errors --}}
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @elseif(!empty(session('feedback')))
+        <div class="alert alert-success text-capitalize text-center">
+            {{session('feedback')}}
+        </div>
+    @endif
+
 
     {{ Form::open(['route'=>'article.create-post']) }}
     {{ csrf_field() }}
@@ -31,6 +46,5 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     {{ Form::close()}}
-
 
 @endsection

@@ -23,7 +23,6 @@ Route::group(['prefix'=>'articles'],function (){
     Route::get('/create/{author}','ArticleController@createFromAuthor')->name('articles.create-from-author');
     Route::get('/create','ArticlesController@create')->name('article.create-get');
     Route::post('/create','ArticlesController@create')->name('article.create-post');
-//    Route::get('/page={pageId}','ArticlesController@specifiPage')->name('articles.index')->where('pageId', '[0-9]+');
 
 });
 

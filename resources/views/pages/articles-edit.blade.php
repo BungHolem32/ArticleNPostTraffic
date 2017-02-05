@@ -12,7 +12,7 @@
         <h1>Article Edit</h1>
     </div>
 
-
+    {{--print the errors --}}
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
@@ -21,6 +21,8 @@
                 @endforeach
             </ul>
         </div>
+
+    {{--print success messages--}}
     @elseif(!empty(session('feedback')))
         <div class="alert alert-success text-capitalize text-center">
             {{session('feedback')}}

@@ -36,11 +36,13 @@ class ArticlesController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $articles = $this->repo->getAllArticles();
+        $setting = $request->all();
+        $articles = $this->repo->getAllArticles($setting);
         return view('pages.articles')->with(["data" => $articles]);
     }
 
@@ -53,15 +55,25 @@ class ArticlesController extends Controller
     {
         $article = $request->all();
         /*validation*/
+//
 
         if ($request->method() == 'POST') {
+            $this->validate($request, [
+                "title" => 'required|max:255',
+                "body" => "required",
+                "review" => "",
+                "rate" => "numeric"
+            ]);
             $article = $this->repo->prepareData($article);
             if ((is_a($article, Article::class))) {
                 $this->repo->create($article);
+                $request->session()->flash('feedback', 'new article added');
+                return redirect()->route('articles.index')->with(["data" => $this->repo->getAllArticles()]);
+
             }
         }
 
-        return view('pages.articles-create')->with(["data" => ($this->repo->getAllArticles())]);
+        return view('pages.articles-create');
     }
 
 
