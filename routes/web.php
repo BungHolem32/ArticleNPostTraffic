@@ -12,7 +12,7 @@
 */
 
 
-Route::get('/', 'InitController@index');
+Route::get('/', 'InitController@index')->name('articles.generate');
 
 Route::group(['prefix'=>'articles'],function (){
 
