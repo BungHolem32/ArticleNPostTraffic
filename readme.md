@@ -1,7 +1,7 @@
-**You Must  First Create Database of your choice in your database and then update
-the env file then and run the:**
+**Create Database of your choice**
  
-* php artisan doctrine:schema:create
+ run this generator in the cli:
+**php artisan doctrine:schema:create**
  
 
 
