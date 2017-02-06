@@ -17,12 +17,12 @@ Route::get('/', 'InitController@index')->name('articles.generate');
 Route::group(['prefix'=>'articles'],function (){
 
     Route::get('/','ArticlesController@index')->name('articles.index');
-    Route::get('/delete/{article}', 'ArticlesController@deleteArticle')->name('articles.delete')->where('article', '[0-9]+');
-    Route::get('/edit/article={article}', 'ArticlesController@editView')->name('articles.edit-view')->where('article', '[0-9]+');//Route::get('/articles/create/{author}','ArticleController@createFromAuthor')->name('articles.create-from-author');
-    Route::get('/edit/{article}/commit', 'ArticlesController@editArticle')->name('articles.edit-post')->where('article', '[0-9]+');
-    Route::get('/create/{author}','ArticleController@createFromAuthor')->name('articles.create-from-author');
     Route::get('/create','ArticlesController@create')->name('article.create-get');
     Route::post('/create','ArticlesController@create')->name('article.create-post');
+    Route::get('/edit/{articleID}', 'ArticlesController@edit')->name('articles.edit-view')->where('articleID', '[0-9]+');//Route::get('/articles/create/{author}','ArticleController@createFromAuthor')->name('articles.create-from-author');
+    Route::put('/edit/{articleID}', 'ArticlesController@edit')->name('articles.edit-post')->where('articleID', '[0-9]+');
+    Route::delete('/delete/{articleID}', 'ArticlesController@deleteArticle')->name('articles.delete')->where('articleID', '[0-9]+');
+//  Route::get('/create/{author}','ArticleController@createFromAuthor')->name('articles.create-from-author');
 
 });
 

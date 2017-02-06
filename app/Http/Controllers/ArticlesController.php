@@ -55,7 +55,6 @@ class ArticlesController extends Controller
     {
         $article = $request->all();
         /*validation*/
-//
 
         if ($request->method() == 'POST') {
             $this->validate($request, [
@@ -69,13 +68,10 @@ class ArticlesController extends Controller
                 $this->repo->create($article);
                 $request->session()->flash('feedback', 'new article added');
                 return redirect()->route('articles.index')->with(["data" => $this->repo->getAllArticles()]);
-
             }
         }
-
         return view('pages.articles-create');
     }
-
 
     public function createFromAuthor()
     {
@@ -85,37 +81,36 @@ class ArticlesController extends Controller
 
 
     /**
-     * @param null $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function editView($id = null)
-    {
-        return view('pages.articles-edit')->with(['article' => $this->repo->articleWithId($id)]);
-    }
-
-
-    /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function editArticle(Request $request)
+    public function edit(Request $request, $id=null)
     {
-        $articles = $request->request->all();
-        $this->validate($request, [
-            "title" => 'required|max:255',
-            "body" => "required",
-            "review" => "",
-            "rate" => "numeric"
-        ]);
-        $article = $this->repo->articleWithId($articles['id']);
-        $status = $this->repo->update($article, $articles);
 
-        if ($status == 'updated') {
-            $request->session()->flash('feedback', 'article ' . $article->getTitle() . ' updated');
-            return redirect()->back();
-        } else {
-            return redirect()->back()->withErrors(['err' => $status]);
+        if ($request->get('_method') == 'PUT') {
+
+            $data = $request->request->all();
+
+            $this->validate($request, [
+                "title" => 'required|max:255',
+                "body" => "required",
+                "review" => "",
+                "rate" => "numeric"
+            ]);
+            $article = $this->repo->articleWithId($data['id']);
+            $status = $this->repo->update($article, $data);
+
+            if ($status == 'updated') {
+                $request->session()->flash('feedback', 'article ' . $article->getTitle() . ' updated');
+                return redirect()->back();
+            } else {
+                return redirect()->back()->withErrors(['err' => $status]);
+            }
         }
+
+        return view('pages.articles-edit')->with(['article' => $this->repo->articleWithId($id)]);
+
+
     }
 
 

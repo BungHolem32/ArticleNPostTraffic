@@ -56,12 +56,15 @@
                                 <span><i class="fa fa-twitter-square"></i></span>
                                 <span><i class="fa fa-google-plus-square"></i></span>
                             </li>
-                            <a href="{{route('articles.edit-view',$article->getId())}}"
-                               class="text-capitalize text-info ">edit
-                            </a>&nbsp;
-                            <a href="{{route('articles.delete',$article->getId())}}"
-                               class="text-capitalize text-danger pull-right delete-btn">delete
-                            </a>
+
+                            {{ Form::open(['method'=>'delete', 'route'=>['articles.delete',$article->getId()]] )}}
+                                 <input type="submit" class="text-capitalize text-danger pull-right delete-btn" value="delete" title="delete-btn">
+                            {{ Form::close()}}
+
+                            {{ Form::open(['method'=>'get', 'route'=>['articles.edit-view',$article->getId()]] )}}
+                            <input type="submit" class="text-capitalize text-info pull-right edit-btn" value="edit" title="delete-btn">
+                            {{ Form::close()}}
+
                         </ul>
                     </div>
                 </div>

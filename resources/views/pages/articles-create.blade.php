@@ -6,7 +6,7 @@
     <div class="page-header">
         <h1>Article Creation</h1>
     </div>
-    {{--print the errors --}}
+    {{--print the --}}
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
