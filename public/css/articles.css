@@ -2,6 +2,10 @@
     margin-top: 20px;
 }
 
+input[type=submit] {
+    margin-left: 5px;
+}
+
 /*change the pagination to full width*/
 .pagination {
     text-align: center;

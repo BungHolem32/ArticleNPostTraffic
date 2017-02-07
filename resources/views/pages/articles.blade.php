@@ -24,7 +24,8 @@
             <div class="well">
                 <div class="media">
                     <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placekitten.com/150/150">
+                        <?php $var = rand(150, 200) ?>
+                        <img class="media-object" src="http://placekitten.com/{{$var}}/{{$var}}">
                     </a>
                     <div class="media-body">
                         <h4 class="media-heading">{{$article->getTitle()}}</h4>
@@ -58,11 +59,14 @@
                             </li>
 
                             {{ Form::open(['method'=>'delete', 'route'=>['articles.delete',$article->getId()]] )}}
-                                 <input type="submit" class="text-capitalize text-danger pull-right delete-btn" value="delete" title="delete-btn">
+                            <input type="submit"
+                                   class="text-capitalize text-danger pull-right delete-btn btn btn-danger"
+                                   value="delete" title="delete-btn">
                             {{ Form::close()}}
 
                             {{ Form::open(['method'=>'get', 'route'=>['articles.edit-view',$article->getId()]] )}}
-                            <input type="submit" class="text-capitalize text-info pull-right edit-btn" value="edit" title="delete-btn">
+                            <input type="submit" class="text-capitalize text-info pull-right edit-btn btn btn-info"
+                                   value="edit" title="delete-btn">
                             {{ Form::close()}}
 
                         </ul>
