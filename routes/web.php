@@ -28,5 +28,4 @@ Route::group(['prefix'=>'articles'],function (){
 
 //i have done it the hard way
 //there's another way to do it with the larval generator
-// i know the i need to use all the http request but there was some bug that i didn't manage to fix until now
 
